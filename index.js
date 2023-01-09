@@ -3,6 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const _ = require('lodash');
 const {v4: uuid} = require("uuid");
+const axios = require('axios')
 
 const app = express();
 
@@ -38,6 +39,19 @@ res.send(`no comment with id: ${id} found`)
     res.json({
         content
     })
+})
+
+app.get('/api/ip', async (req,res) => {
+let data = await axios.get('https://api.ipify.org?format=json')
+let ipAddress = data.data.ip
+ res.send({
+   "Title": `Hello your IP Address is ${ipAddress}` 
+ })   
+})
+
+app.get('/api',(req,res) => {
+    console.log('hit')
+  res.send('Welcome to my personal API')  
 })
 
 app.post('/api/comments', async (req,res) => {
